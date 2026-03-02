@@ -1,0 +1,3 @@
+sympy
+Crypto
+pycryptodome

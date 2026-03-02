@@ -1,0 +1,38 @@
+**Le Chiffrement, un Art Secret**
+
+Dans un monde plein d'espions malins,  
+On protège nos mots, on verrouille nos liens.  
+Un message en clair ? Quelle erreur fatale !  
+Il finira lu sur un journal banal.  
+
+Alors on encode, on chiffre, on cache,  
+Avec AES, RSA, que rien ne lâche !  
+Les hackers s'arrachent les cheveux en vain,  
+Car nos secrets dorment bien sereins.  
+
+Jadis, César, le grand conquérant,  
+Déplaçait ses lettres, astucieusement.  
+Un simple décalage, une astuce d’enfant,  
+Aujourd’hui brisée en un court instant.  
+
+Puis vint Enigma, fière machine,  
+Tournant ses rotors dans l’usine.  
+Les nazis confiants en leur création,  
+Mais Turing détruisit l’illusion !  
+
+Le chiffrement moderne, une affaire de fous,  
+Des clés immenses, des maths partout !  
+256 bits, tu peux toujours essayer,  
+Ton PC va brûler avant de déchiffrer.  
+
+Alors retiens bien, ami internaute,  
+Un bon mot de passe, pas "123coyote".  
+Utilise PGP, un VPN, et Tor,  
+Ou Big Brother lira ton Discord !  
+
+Ainsi se finit ce poème charmant,  
+Sur l’art subtil du chiffrement.  
+Si tu veux garder tes secrets bien au chaud,  
+Crée une clé... et jette le mot !
+
+by chatGPT 4o
