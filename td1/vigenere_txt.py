@@ -86,7 +86,9 @@ def coincidence_rate(data: list[int], lag: int) -> float:
     return matches / n
 
 
-def find_key_length(data: list[int], max_len: int = 120) -> tuple[int, dict[int, float]]:
+def find_key_length(
+    data: list[int], max_len: int = 120
+) -> tuple[int, dict[int, float]]:
     """
     Detect the period with autocorrelation peaks.
     We keep the smallest lag among those close to the best peak.
@@ -136,7 +138,7 @@ def decrypt_text(data: list[int], key: bytes) -> str:
     for i, codepoint in enumerate(data):
         plain_code = codepoint - key[i % klen]
         if plain_code < 0 or plain_code > 0x10FFFF:
-            out.append("\uFFFD")
+            out.append("\ufffd")
         else:
             out.append(chr(plain_code))
     return "".join(out)
