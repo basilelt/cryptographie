@@ -2,7 +2,6 @@ def cesar_crypt(message: str, shift: int = 3) -> str:
     result = []
     for char in message.upper():
         if char.isalpha():
-            # Circular shift: map A→0 … Z→25, apply shift, map back
             result.append(chr((ord(char) - ord("A") + shift) % 26 + ord("A")))
         else:
             result.append(char)
@@ -13,22 +12,17 @@ def cesar_decrypt(message: str, shift: int = 3) -> str:
     return cesar_crypt(message, -shift)
 
 
-# ─── 1. Test with VENIVIDIVICI ────────────────────────────────────────────────
-
 plaintext = "VENIVIDIVICI"
-ciphertext = cesar_crypt(plaintext)  # default shift of 3
+ciphertext = cesar_crypt(plaintext)
 recovered = cesar_decrypt(ciphertext)
 
-print("=== Caesar Cipher (shift = 3) ===")
-print(f"  Plaintext  : {plaintext}")
-print(f"  Ciphertext : {ciphertext}")  # expected: YHQLYLGLYLFL
-print(f"  Decrypted  : {recovered}")
+print(f"plaintext  : {plaintext}")
+print(f"ciphertext : {ciphertext}")  # YHQLYLGLYLFL
+print(f"decrypted  : {recovered}")
 print()
 
 
-# ─── 2. Automatic cryptanalysis via frequency analysis ─────────────────────
-
-# Relative letter frequencies in French (source: Wikipedia)
+# frequences des lettres en français (Wikipedia)
 FREQ_FR = {
     "A": 0.0812,
     "B": 0.0090,
@@ -60,7 +54,6 @@ FREQ_FR = {
 
 
 def score(text: str) -> float:
-    """Compute a likelihood score (dot product of letter frequencies)."""
     letters = [c for c in text.upper() if c.isalpha()]
     if not letters:
         return 0.0
@@ -69,7 +62,6 @@ def score(text: str) -> float:
 
 
 def cesar_break(ciphertext: str) -> tuple[int, str]:
-    """Automatically find the most likely shift."""
     best_shift, best_text, best_score = 0, ciphertext, -1.0
     for shift in range(26):
         candidate = cesar_decrypt(ciphertext, shift)
@@ -83,22 +75,21 @@ def cesar_break(ciphertext: str) -> tuple[int, str]:
 
 intercepted = "AVJLZJRCREKLIZEXZEMVEKVLIDVTFEELULKVJKUVKLIZEX"
 
-print("=== Automatic cryptanalysis via frequency analysis ===")
-print(f"  Intercepted message: {intercepted}\n")
+print(f"message intercepté : {intercepted}\n")
 
-# Display all candidates with their score
-print(f"  {'Shift':>8}  {'Score':>8}  Decrypted text")
-print("  " + "-" * 65)
 scores = []
 for shift in range(26):
     candidate = cesar_decrypt(intercepted, shift)
     s = score(candidate)
     scores.append((s, shift, candidate))
 scores.sort(reverse=True)
+
+print(f"  {'shift':>6}  {'score':>8}  texte")
+print("  " + "-" * 55)
 for s, shift, candidate in scores:
-    print(f"  {shift:>8}  {s:>8.4f}  {candidate}")
+    print(f"  {shift:>6}  {s:>8.4f}  {candidate}")
 
 print()
 best_shift, best_text = cesar_break(intercepted)
-print(f"  => Shift found automatically: {best_shift}")
-print(f"  => Decrypted message: {best_text}")
+print(f"décalage trouvé : {best_shift}")
+print(f"message déchiffré : {best_text}")
