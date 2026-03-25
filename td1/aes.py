@@ -54,6 +54,9 @@ def decrypt_file_ctr(input_file, output_file, key, nonce_size=8):
 
 
 if __name__ == "__main__":
+    import os
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
     # Encrypt the poeme.txt file
     encrypt_file_cbc("poeme.txt", "poeme_encrypted.txt")
 
