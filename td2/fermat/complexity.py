@@ -7,6 +7,7 @@ Complexité attendue : O(b³) en nombre de bits b = ⌊log₂(n)⌋
   → temps polynomial en b  (≠ exponentiel pour le test naïf)
 """
 
+import math
 import time
 import os
 import sys
@@ -53,11 +54,12 @@ def run():
     # --- Graphiques ---
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(18, 5))
 
-    # 1. Temps vs b (linéaire)
-    ax1.plot(bits, [t * 1e6 for t in times], "o-", linewidth=1.5, markersize=4)
-    ax1.set_xlabel("b = ⌊log₂(n)⌋  (nombre de bits)")
+    # 1. Temps vs n (exprimé en puissance de 10)
+    log10_n = [math.log10(n) for n in candidates]
+    ax1.plot(log10_n, [t * 1e6 for t in times], "o-", linewidth=1.5, markersize=4)
+    ax1.set_xlabel("log₁₀(n)")
     ax1.set_ylabel("Temps moyen (µs)")
-    ax1.set_title("Temps vs b  —  croissance polynomiale")
+    ax1.set_title("Temps vs n  (x = exposant base 10)")
     ax1.grid(True)
 
     # 2. log(temps) vs log(b) : droite de pente ≈ 3
