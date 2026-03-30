@@ -2,12 +2,16 @@
 Étude expérimentale de la complexité du test de primalité naïf.
 """
 
+import os
+import sys
 import math
 import time
 import numpy as np
 import matplotlib.pyplot as plt
 
+sys.path.insert(0, os.path.dirname(__file__))
 from main import is_prime_naive
+from sympy import nextprime
 
 
 def next_prime(start: int) -> int:
@@ -83,7 +87,7 @@ def run():
     ax3.grid(True, which="both")
 
     plt.tight_layout()
-    out = "td2/complexity_naive_primality.png"
+    out = os.path.join(os.path.dirname(__file__), "complexity_naive_primality.png")
     plt.savefig(out, dpi=150)
     print(f"Graphique sauvegardé : {out}")
     plt.show()
