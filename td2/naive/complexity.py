@@ -34,35 +34,53 @@ def run():
     times = [measure(n) for n in candidates]
     sqrts = [math.sqrt(n) for n in candidates]
 
-    # --- Tableau ---
-    print(f"{'n':>12}  {'√n':>10}  {'temps (µs)':>12}")
-    print("-" * 38)
-    for n, sq, t in zip(candidates, sqrts, times):
-        print(f"{n:>12}  {sq:>10.1f}  {t*1e6:>12.4f}")
+    bits = [n.bit_length() for n in candidates]
 
-    # --- Régression log-log (en fonction de n) ---
+    # --- Tableau ---
+    print(f"{'b':>4}  {'n':>12}  {'√n':>10}  {'temps (µs)':>12}")
+    print("-" * 43)
+    for b, n, sq, t in zip(bits, candidates, sqrts, times):
+        print(f"{b:>4}  {n:>12}  {sq:>10.1f}  {t*1e6:>12.4f}")
+
+    # --- Régressions ---
     log_n = np.log(candidates)
     log_t = np.log(times)
     slope, intercept = np.polyfit(log_n, log_t, 1)
-    print(f"\nPente log-log = {slope:.3f}  (attendu ≈ 0.5 pour Θ(√n))")
+    print(f"\nPente log-log (vs n) = {slope:.3f}  (attendu ≈ 0.5 pour Θ(√n))")
+
+    # Régression linéaire temps ~ A * 2^(b/2) → log(temps) linéaire en b
+    slope_b, intercept_b = np.polyfit(bits, log_t, 1)
+    print(f"Pente log(temps) vs b = {slope_b:.4f}  (attendu ≈ log(2)/2 ≈ {math.log(2)/2:.4f})")
 
     # --- Graphiques ---
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5))
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(18, 5))
 
     ax1.plot(candidates, [t * 1e6 for t in times], "o-", linewidth=1.5, markersize=4)
     ax1.set_xlabel("n")
     ax1.set_ylabel("Temps moyen (µs)")
-    ax1.set_title("Temps vs n  —  pire cas (n premier)")
+    ax1.set_title("Temps vs n")
     ax1.grid(True)
 
     ax2.plot(log_n, log_t, "o", markersize=4, label="mesures")
     ax2.plot(log_n, slope * log_n + intercept, "--",
-             label=f"régression : pente = {slope:.2f}")
+             label=f"pente = {slope:.2f}")
     ax2.set_xlabel("log(n)")
     ax2.set_ylabel("log(temps)")
-    ax2.set_title("Graphe log-log → pente ≈ 0.5 confirme Θ(√n)")
+    ax2.set_title("log-log → pente ≈ 0.5 confirme Θ(√n)")
     ax2.legend()
     ax2.grid(True)
+
+    # Temps vs b : courbe exponentielle (semi-log doit être une droite)
+    ax3.semilogy(bits, [t * 1e6 for t in times], "o-", linewidth=1.5, markersize=4,
+                 label="mesures")
+    b_fit = np.array([min(bits), max(bits)])
+    ax3.semilogy(b_fit, np.exp(slope_b * b_fit + intercept_b) * 1e6, "--",
+                 label=f"régression : pente = {slope_b:.4f}\n(attendu {math.log(2)/2:.4f})")
+    ax3.set_xlabel("b = ⌊log₂(n)⌋  (nombre de bits)")
+    ax3.set_ylabel("Temps moyen (µs)  [échelle log]")
+    ax3.set_title("Temps vs b — exponentiel en b")
+    ax3.legend()
+    ax3.grid(True, which="both")
 
     plt.tight_layout()
     out = "td2/complexity_naive_primality.png"
