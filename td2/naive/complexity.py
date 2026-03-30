@@ -14,14 +14,6 @@ from main import is_prime_naive
 from sympy import nextprime
 
 
-def next_prime(start: int) -> int:
-    """Retourne le plus petit premier >= start."""
-    n = start | 1  # force impair
-    while not is_prime_naive(n):
-        n += 2
-    return n
-
-
 def measure(n: int, repeats: int = 30) -> float:
     """Temps moyen (s) pour tester la primalité de n."""
     t0 = time.perf_counter()
@@ -34,7 +26,7 @@ def run():
     # Pire cas : n premier → on parcourt tous les diviseurs jusqu'à √n
     # Valeurs logarithmiquement espacées entre 10^1 et 10^8
     ns_raw = np.logspace(1, 8, num=40, dtype=int)
-    candidates = [next_prime(int(n)) for n in ns_raw]
+    candidates = [int(nextprime(int(n))) for n in ns_raw]
     times = [measure(n) for n in candidates]
     sqrts = [math.sqrt(n) for n in candidates]
 
