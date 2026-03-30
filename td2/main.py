@@ -19,7 +19,7 @@ def is_prime_naive(n: int) -> bool:
 
 if __name__ == "__main__":
     primes   = [2, 3, 5, 7, 11, 13, 97, 101, 7919]
-    composites = [1, 4, 9, 15, 100, 7920, 648923754902735, 4328947329865, 876545678]
+    composites = [1, 4, 9, 15, 100, 7920, 648923754902735, 4328947329865, 876545678, 23456789876543234567898765434567898765432345673]
     print(list(is_prime_naive(p) for p in primes))
     print(list(is_prime_naive(c) for c in composites))
 
