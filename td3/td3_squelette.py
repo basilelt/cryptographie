@@ -314,9 +314,9 @@ if __name__ == "__main__":
     key_att = "".join(chr(ord("A") + int(d)) for d in str(K_att))
     pt = vigenere_decrypt(ct, key_att)
 
-    print(f"\n--- Attaque ---")
+    print(f"\n--- Exercice 2 Vigenère / Diffie-Hellman brute force ---")
     print(f"a = {a_att}, K = {K_att}")
-    print(f"Clé Vigenère : {key_att}")
+    print(f"Clé Vigenère : {key_att} ({K_att})")
     print(f"Message déchiffré : {pt}")
     
     
