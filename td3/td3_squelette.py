@@ -80,6 +80,7 @@ def diffie_hellman(bits: int = 16) -> tuple[int, int, int, int, int]:
 
     return p, g, A, B, K_alice
 
+
 # See @td1/vigenere.py for the Vigenère cipher implementation
 def vigenere_decrypt(message: str, key: str) -> str:
     key = key.upper()
@@ -318,6 +319,7 @@ if __name__ == "__main__":
     print(f"a = {a_att}, K = {K_att}")
     print(f"Clé Vigenère : {key_att} ({K_att})")
     print(f"Message déchiffré : {pt}")
-    
-    
-    # Exercice x
+
+    # Exercice 3
+
+    # Exercice 4
